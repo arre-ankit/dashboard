@@ -15,37 +15,102 @@ export interface Task {
 export const tasks: Task[] = [
   {
     id: "1",
-    title: "Site inspection",
-    startDate: new Date(2024, 3, 25).toISOString(), // April 25, 2024
-    dueDate: new Date(2024, 4, 1).toISOString(), // May 1, 2024
-    status: "Complete",
-    createdAt: new Date(2024, 3, 15).toISOString(),
+    title: "Clearing and Grubbing",
+    startDate: new Date(2025, 3, 7).toISOString(),
+    dueDate: new Date(2025, 3, 17).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
   },
   {
     id: "2",
-    title: "Foundation design",
-    startDate: new Date(2024, 4, 1).toISOString(), // May 1, 2024
-    dueDate: new Date(2024, 4, 7).toISOString(), // May 7, 2024
+    title: "OGL Recording",
+    startDate: new Date(2025, 3, 18).toISOString(),
+    dueDate: new Date(2025, 3, 21).toISOString(),
     status: "Work in progress",
-    createdAt: new Date(2024, 3, 20).toISOString(),
+    createdAt: new Date(2025, 2, 31).toISOString(),
   },
   {
     id: "3",
-    title: "Structural analysis",
-    startDate: new Date(2024, 4, 5).toISOString(), // May 5, 2024
-    dueDate: new Date(2024, 4, 12).toISOString(), // May 12, 2024
+    title: "Embankment Layer",
+    startDate: new Date(2025, 3, 22).toISOString(),
+    dueDate: new Date(2025, 3, 25).toISOString(),
     status: "Work in progress",
-    createdAt: new Date(2024, 3, 25).toISOString(),
+    createdAt: new Date(2025, 2, 31).toISOString(),
   },
   {
     id: "4",
-    title: "Cost estimation",
-    startDate: new Date(2024, 4, 10).toISOString(), // May 10, 2024
-    dueDate: new Date(2024, 4, 18).toISOString(), // May 18, 2024
+    title: "Subgrade 1",
+    startDate: new Date(2025, 3, 18).toISOString(),
+    dueDate: new Date(2025, 3, 28).toISOString(),
     status: "Work in progress",
-    createdAt: new Date(2024, 4, 1).toISOString(),
+    createdAt: new Date(2025, 2, 31).toISOString(),
   },
-]
+  {
+    id: "5",
+    title: "Subgrade 2",
+    startDate: new Date(2025, 3, 29).toISOString(),
+    dueDate: new Date(2025, 4, 7).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "6",
+    title: "Subgrade Top",
+    startDate: new Date(2025, 4, 8).toISOString(),
+    dueDate: new Date(2025, 4, 20).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "7",
+    title: "GSB",
+    startDate: new Date(2025, 4, 21).toISOString(),
+    dueDate: new Date(2025, 4, 27).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "8",
+    title: "WMM",
+    startDate: new Date(2025, 4, 21).toISOString(),
+    dueDate: new Date(2025, 4, 27).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "9",
+    title: "Prime Coat",
+    startDate: new Date(2025, 4, 21).toISOString(),
+    dueDate: new Date(2025, 4, 22).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "10",
+    title: "DBM",
+    startDate: new Date(2025, 4, 28).toISOString(),
+    dueDate: new Date(2025, 5, 2).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "11",
+    title: "BC",
+    startDate: new Date(2025, 5, 3).toISOString(),
+    dueDate: new Date(2025, 5, 5).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+  {
+    id: "12",
+    title: "Road Furniture",
+    startDate: new Date(2025, 5, 6).toISOString(),
+    dueDate: new Date(2025, 5, 6).toISOString(),
+    status: "Work in progress",
+    createdAt: new Date(2025, 2, 31).toISOString(),
+  },
+];
+
 
 // GET handler to retrieve all tasks
 export async function GET() {
