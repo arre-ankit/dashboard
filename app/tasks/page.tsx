@@ -14,7 +14,7 @@ export default function TasksPage() {
         <div className="absolute right-4 top-1/2 -translate-y-1/2">
           <ThemeToggle />
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">CIVIL ENGINEERING</h1>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">HIGHWAY CONSTRUCTION</h1>
       </div>
     </header>
 

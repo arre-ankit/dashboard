@@ -1,70 +1,111 @@
 "use client"
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { format, startOfDay, addMonths } from "date-fns"
 import { useTasks } from "@/context/task-context"
-import { format, parseISO } from "date-fns"
-
-interface Task {
-  title: string
-  startDate: string
-  dueDate: string
-  status: string
-}
 
 export default function StatusGraph() {
-  const { tasks } = useTasks()
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  const { tasks, isLoading } = useTasks()
 
-  // Find the earliest start date and latest end date
-  const dateRange = tasks.reduce(
-    (range, task) => {
-      const start = parseISO(task.startDate)
-      const end = parseISO(task.dueDate)
-      return {
-        start: !range.start || start < range.start ? start : range.start,
-        end: !range.end || end > range.end ? end : range.end,
-      }
-    },
-    { start: null, end: null } as { start: Date | null; end: Date | null }
-  )
-
-  if (!dateRange.start || !dateRange.end || tasks.length === 0) {
-    return <div className="text-center p-4">No tasks available</div>
+  if (isLoading) {
+    return <div className="text-center py-8">Loading dashboard data...</div>
   }
 
-  return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Status Graph</h2>
-      <div className="relative">
-        {/* Month headers */}
-        <div className="flex mb-8 ml-24">
-          {months.map((month, i) => (
-            <div key={month} className="flex-1 text-center font-medium">
-              {month}
-            </div>
-          ))}
-        </div>
+  // Transform and sort tasks by start date
+  const statusGraphData = tasks.map(task => ({
+    title: task.title,
+    startDate: new Date(task.startDate),
+    endDate: new Date(task.dueDate),
+    status: task.status
+  })).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
 
-        {/* Tasks */}
-        <div className="space-y-6">
-          {tasks.map((task, index) => (
-            <div key={index} className="flex items-center">
-              <div className="w-24 font-medium">{task.title}</div>
-              <div className="flex-1 relative h-2">
-                <div
-                  className="absolute h-2 bg-gray-800 rounded-full"
-                  style={{
-                    left: `${(parseISO(task.startDate).getMonth() / 12) * 100}%`,
-                    right: `${100 - ((parseISO(task.dueDate).getMonth() + 1) / 12) * 100}%`,
-                  }}
-                >
-                  <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-800 rounded-full" />
-                  <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-800 rounded-full" />
+  // Set timeline range for April to June 2025
+  const timelineStart = startOfDay(new Date(2025, 3, 1)) // Changed to April
+  const timelineEnd = new Date(2025, 5, 30)   // June
+
+  // Calculate position based on date
+  const getDatePosition = (date: Date) => {
+    const total = timelineEnd.getTime() - timelineStart.getTime()
+    const position = date.getTime() - timelineStart.getTime()
+    return (position / total) * 100
+  }
+
+  // Generate month markers (3 months instead of 4)
+  const monthMarkers = Array.from({ length: 3 }, (_, i) => addMonths(timelineStart, i))
+
+  return (
+    <Card className="shadow-lg">
+      <CardHeader className="border-b border-border">
+        <CardTitle>Project Timeline</CardTitle>
+        <CardDescription>Task schedule and progress</CardDescription>
+      </CardHeader>
+      <CardContent className="p-6">
+        <div className="relative h-[600px] overflow-y-auto">
+          {/* Task names column - Fixed */}
+          <div className="absolute left-0 top-0 w-72 bg-background z-20">
+            <div className="h-14 border-b border-border" /> {/* Header spacer */}
+            <div className="space-y-4 py-6">
+              {statusGraphData.map((task, index) => (
+                <div key={index} className="h-12 flex items-center px-4">
+                  <span className="font-medium text-base truncate">
+                    {task.title}
+                  </span>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Timeline section */}
+          <div className="ml-72"> {/* Offset by task names width */}
+            {/* Month headers - Sticky */}
+            <div className="grid grid-cols-3 border-b border-border bg-card sticky top-0 z-10">
+              {monthMarkers.map((date, i) => (
+                <div 
+                  key={i} 
+                  className="text-center py-4 text-base font-medium border-r border-border last:border-r-0"
+                >
+                  {format(date, 'MMMM yyyy')}
+                </div>
+              ))}
+            </div>
+            
+            {/* Tasks timeline */}
+            <div className="relative">
+              {/* Vertical grid lines */}
+              <div className="absolute inset-0 grid grid-cols-3 pointer-events-none h-full">
+                {monthMarkers.map((_, i) => (
+                  <div key={i} className="border-r border-border/30 last:border-r-0" />
+                ))}
+              </div>
+
+              {/* Timeline bars */}
+              <div className="space-y-4 py-6">
+                {statusGraphData.map((task, index) => {
+                  const startPos = getDatePosition(task.startDate)
+                  const duration = getDatePosition(task.endDate) - startPos
+                  
+                  return (
+                    <div key={index} className="h-12 flex items-center">
+                      <div className="flex-1 relative px-4">
+                        <div
+                          className="absolute h-6 rounded-full bg-primary/80 group-hover:bg-primary transition-colors"
+                          style={{
+                            left: `${startPos}%`,
+                            width: `${Math.max(duration, 1)}%`,
+                            minWidth: '24px'
+                          }}
+                        >
+                          <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary" />
+                          <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary" />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
-} 
+}
