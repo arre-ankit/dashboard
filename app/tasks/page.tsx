@@ -4,20 +4,12 @@ import TaskTable from "@/components/task-table"
 import DashboardStats from "@/components/dashboard-stats"
 import StatusGraph from "@/components/status-graph"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ThemeToggle } from "@/components/theme-toggle"
+import NavHeader from "@/components/nav-header"
 
 export default function TasksPage() {
   return (
     <div className="min-h-screen bg-background">
-    <header className="py-8 text-center border-b bg-card">
-      <div className="container mx-auto px-4 relative">
-        <div className="absolute right-4 top-1/2 -translate-y-1/2">
-          <ThemeToggle />
-        </div>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">HIGHWAY CONSTRUCTION</h1>
-      </div>
-    </header>
-
+    <NavHeader />
     <main className="container mx-auto py-6 px-4">
       <Tabs defaultValue="tasks" className="w-full">
         <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">

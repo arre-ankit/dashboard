@@ -20,7 +20,7 @@ const INITIAL_TASKS: Task[] = [
     title: "Clearing and Grubbing",
     startDate: new Date(2025, 3, 7).toISOString(),
     dueDate: new Date(2025, 3, 17).toISOString(),
-    status: "Work in progress",
+    status: "Complete",
     createdAt: new Date(2025, 2, 31).toISOString(),
   },
   {
@@ -28,7 +28,7 @@ const INITIAL_TASKS: Task[] = [
     title: "OGL Recording",
     startDate: new Date(2025, 3, 18).toISOString(),
     dueDate: new Date(2025, 3, 21).toISOString(),
-    status: "Work in progress",
+    status: "Complete",
     createdAt: new Date(2025, 2, 31).toISOString(),
   },
   {

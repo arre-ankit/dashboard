@@ -1,10 +1,46 @@
-type ToastProps = {
-  title: string
-  description: string
-  variant?: "default" | "destructive"
+"use client"
+import {
+  // @ts-ignore
+  useToast as useToastRadix,
+  // @ts-ignore
+  toast as toastRadix,
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+  ToastAction,
+  type ToastProps,
+  type ToastActionElement,
+} from "@/components/ui/toast"
+
+function useToast() {
+  const { toasts, toast, dismiss } = useToastRadix()
+
+  return {
+    toasts,
+    toast,
+    dismiss,
+  }
 }
 
-export function toast(props: ToastProps) {
-  // In a real implementation, this would show a toast notification
-  console.log("Toast:", props)
+function toast(props: ToastProps) {
+  toastRadix(props)
 }
+
+export {
+  useToast,
+  toast,
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+  ToastAction,
+  type ToastProps,
+  type ToastActionElement,
+}
+
+export default useToast
